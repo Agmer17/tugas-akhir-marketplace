@@ -1,0 +1,104 @@
+/* Custom CSS untuk sedikit penyesuaian */
+.filter-section {
+    padding: 15px;
+    /* border-right: 1px solid #eee; /* Optional: add a border between filters and items */
+}
+
+*::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+
+.color-primary {
+    color: #fde900;
+    font-weight: bold;
+}
+
+.border-primary-color {
+    border-color: #fde900;
+}
+
+.border-primary-color::placeholder {
+    font-weight: 600;
+}
+
+.background-primary-color {
+    background-color: #fde900;
+}
+
+.custom-dropdown-width {
+    width: 100%;
+}
+
+.mb-2.background-primary-color.text-dark.fw-bold.py-1.rounded-5 {
+    transition: all ease 0.3s;
+}
+
+.mb-2.background-primary-color.text-dark.fw-bold.py-1.rounded-5:hover {
+    background-color: rgb(161, 161, 161);
+    border-color: #fde900;
+    color: #fde900;
+}
+
+.product-item {
+    border: 1px solid #eee;
+    margin-bottom: 20px;
+    padding: 15px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Optional: add a subtle shadow */
+    display: flex;
+    /* Use flexbox for content alignment */
+    flex-direction: column;
+    justify-content: space-between;
+    /* Distribute space vertically */
+    height: 100%;
+    /* Ensure items in a row have similar height */
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    object-fit: cover;
+    /* Crop image to fit without distortion */
+    /* max-height: 150px; Optional: limit image height */
+}
+
+.product-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.product-status {
+    color: gray;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 1em;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.product-dp {
+    font-size: 0.9em;
+    color: gray;
+}
+
+/* Optional: Adjust filter padding on small screens */
+@media (max-width: 767.98px) {
+
+    /* Bootstrap's sm breakpoint */
+    .filter-section {
+        border-right: none;
+        /* Remove border on small screens */
+        border-bottom: 1px solid #eee;
+        /* Add a bottom border */
+        margin-bottom: 20px;
+    }
+}

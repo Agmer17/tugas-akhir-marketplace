@@ -1,0 +1,259 @@
+*::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+}
+
+
+.color-primary {
+    color: #fde900;
+    font-weight: bold;
+}
+
+.border-primary-color {
+    border-color: #fde900;
+}
+
+.border-primary-color::placeholder {
+    font-weight: 600;
+}
+
+.background-primary-color {
+    background-color: #fde900;
+}
+
+.custom-dropdown-width {
+    width: 100%;
+}
+
+.mb-2.background-primary-color.text-dark.fw-bold.py-1.rounded-5 {
+    transition: all ease 0.3s;
+}
+
+.mb-2.background-primary-color.text-dark.fw-bold.py-1.rounded-5:hover {
+    background-color: rgb(161, 161, 161);
+    border-color: #fde900;
+    color: #fde900;
+}
+
+/* Custom CSS untuk tampilan seperti gambar */
+.product-card {
+    border: none;
+    /* Hilangkan border default card */
+    border-radius: 10px;
+    /* Tambahkan border radius */
+    overflow: hidden;
+    /* Penting agar border radius bekerja dengan baik pada konten di dalamnya */
+    /* margin-right: 15px; /* Jarak antar card, bisa pakai utility spacing Bootstrap */
+
+    /* --- PENTING: Set lebar card secara eksplisit --- */
+    width: 220px;
+    /* Ganti dengan lebar card yang kamu inginkan (contoh: 220px) */
+    /* max-width: 100%; /* Opsional: Pastikan card tidak melebihi lebar parent di kasus ekstrem */
+
+    flex-shrink: 0;
+    /* Sangat PENTING: Mencegah card menyusut */
+}
+
+.card-top-yellow {
+    background-color: #ffee58;
+    /* Warna kuning, sesuaikan kode hex jika perlu */
+    height: 150px;
+    /* Tinggi bagian kuning, sesuaikan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.card-bottom-white {
+    background-color: #ffffff;
+    height: 100px;
+    /* Tinggi bagian putih, sesuaikan */
+}
+
+/* Gaya untuk kontainer card agar bisa horizontal scroll */
+.horizontal-scroll-container {
+    overflow-x: auto;
+    /* Aktifkan horizontal scrolling */
+    white-space: nowrap;
+    /* Pastikan item tidak wrap ke bawah */
+    padding-bottom: 20px;
+    /* Beri padding agar scrollbar tidak menutupi konten */
+
+    /* Gunakan flexbox pada kontainer ini */
+    display: flex;
+    /* gap: 15px; /* Bisa gunakan gap di flexbox untuk jarak antar item */
+}
+
+
+/* Gaya untuk tombol navigasi (opsional, bisa disesuaikan) */
+.scroll-button {
+    position: absolute;
+    bottom: 20px;
+    /* Jarak dari bawah */
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    /* Bentuk bulat */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    /* Pastikan tombol di atas card */
+}
+
+.scroll-button.left {
+    right: 60px;
+    /* Jarak dari kanan untuk tombol kiri */
+}
+
+.scroll-button.right {
+    right: 10px;
+    /* Jarak dari kanan untuk tombol kanan */
+}
+
+.top-product {
+    background: linear-gradient(to bottom, white 0%, white 50%, #fde900 50%, #fde900 100%);
+}
+
+.footer-section {
+    background-color: #ffe500;
+    /* Warna kuning sesuai gambar */
+    padding: 40px 0;
+    color: #000;
+    /* Warna teks default hitam */
+}
+
+.footer-brand {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.footer-tagline {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+
+.footer-social-icons a {
+    color: #000;
+    font-size: 1.5em;
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.footer-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #000;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-button .btn {
+    background-color: #000;
+    color: #ffe500;
+    /* Warna teks kuning */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1em;
+}
+
+.footer-button .btn:hover {
+    background-color: #333;
+    color: #ffe500;
+}
+
+.footer-made-with {
+    font-size: 0.9em;
+    color: #555;
+    /* Warna abu-abu sedikit lebih gelap */
+    margin-top: 20px;
+    /* Jarak dari elemen di atasnya */
+}
+
+/* Menyesuaikan tata letak untuk layar yang lebih kecil */
+@media (max-width: 767.98px) {
+
+    /* Bootstrap's sm breakpoint */
+    .footer-section {
+        text-align: center;
+        /* Pusatkan konten di layar kecil */
+    }
+
+    .footer-social-icons {
+        margin-bottom: 20px;
+        /* Tambahkan jarak di bawah ikon */
+    }
+
+    .footer-links {
+        margin-bottom: 20px;
+        /* Tambahkan jarak di bawah links */
+    }
+
+    .footer-links ul {
+        display: flex;
+        justify-content: center;
+        /* Pusatkan links */
+        gap: 20px;
+        /* Beri jarak antar link */
+        flex-wrap: wrap;
+        /* Bungkus link jika terlalu banyak */
+    }
+
+    .footer-button {
+        margin-bottom: 20px;
+        /* Tambahkan jarak di bawah tombol */
+    }
+
+    .footer-made-with {
+        margin-top: 0;
+        /* Hapus margin atas di layar kecil */
+    }
+}
+
+/* Media query untuk menyesuaikan posisi tombol di layar kecil jika perlu */
+@media (max-width: 576px) {
+    .scroll-button.left {
+        right: 50px;
+        /* Sesuaikan posisi */
+        bottom: 10px;
+        /* Sesuaikan posisi */
+        width: 30px;
+        /* Kecilkan ukuran */
+        height: 30px;
+        /* Kecilkan ukuran */
+    }
+
+    .scroll-button.right {
+        right: 10px;
+        /* Sesuaikan posisi */
+        bottom: 10px;
+        /* Sesuaikan posisi */
+        width: 30px;
+        /* Kecilkan ukuran */
+        height: 30px;
+        /* Kecilkan ukuran */
+    }
+
+    .horizontal-scroll-container {
+        padding-bottom: 10px;
+        /* Kurangi padding jika tombol lebih rendah */
+    }
+}
