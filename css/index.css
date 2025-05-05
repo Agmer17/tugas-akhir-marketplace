@@ -257,3 +257,7 @@
         /* Kurangi padding jika tombol lebih rendah */
     }
 }
+
+.product-card {
+    cursor: pointer;
+}
