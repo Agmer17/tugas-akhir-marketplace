@@ -1,0 +1,79 @@
+[
+    {
+        "img": "product-1.jpeg",
+        "name": "Kaos Futsal Basic Nyaman",
+        "description": "Kaos futsal basic dengan bahan adem, cocok untuk latihan rutin.",
+        "price": 75000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "prduct-2.jpeg",
+        "name": "Jersey Futsal Tim A",
+        "description": "Jersey futsal dengan desain simpel dan sporty, pilihan tim.",
+        "price": 85000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-4.jpeg",
+        "name": "Setelan Futsal Pola Modern",
+        "description": "Satu set kaos dan celana futsal, bahan ringan untuk pergerakan maksimal.",
+        "price": 90000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-5.jpeg",
+        "name": "Baju Futsal Printing Abstrak",
+        "description": "Baju futsal dengan motif printing abstrak, desain unik dan modern.",
+        "price": 95000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-6.jpeg",
+        "name": "Kaos Futsal Latihan Harian",
+        "description": "Kaos futsal basic untuk latihan harian, bahan breathable menyerap keringat.",
+        "price": 60000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-7.jpeg",
+        "name": "Jersey Tim Futsal Garis Sporty",
+        "description": "Jersey tim dengan pola garis sporty, tampil percaya diri.",
+        "price": 88000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-8.jpeg",
+        "name": "Setelan Futsal Enerjik Sporty",
+        "description": "Setelan futsal desain energik, desain ergonomis untuk kenyamanan.",
+        "price": 92000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-9.jpeg",
+        "name": "Kaos Futsal Motif Geometris",
+        "description": "Kaos futsal dengan motif geometris modern, bahan elastis.",
+        "price": 80000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-10.jpeg",
+        "name": "Jersey Futsal Simple V-Neck",
+        "description": "Jersey futsal dengan kerah V-neck yang simpel, tetap stylish.",
+        "price": 78000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "product-11.jpeg",
+        "name": "Baju Futsal Quick Dry",
+        "description": "Baju futsal cepat kering, menjaga performa di lapangan.",
+        "price": 70000,
+        "category": "kaos futsal"
+    },
+    {
+        "img": "claude.jpg",
+        "name": "Kaos Custom Hero Claude MLBB",
+        "description": "Kaos eksklusif dengan gambar hero Claude Mobile Legends, bahan katun premium.",
+        "price": 99000,
+        "category": "kaos custom"
+    }
+]

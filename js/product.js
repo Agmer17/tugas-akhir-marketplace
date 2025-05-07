@@ -1,48 +1,70 @@
 window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
 
-  const name = params.get("name");
-  const price = params.get("price");
-  const img = params.get("img");
+  const productData = {
+    name: params.get("name"),
+    price: params.get("price"),
+    img: params.get("img"),
+    desc: params.get("desc"),
+  };
 
-  // Format angka ke format Rupiah
-  function formatRupiah(angka) {
-    return angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
+  const formatRupiah = (price) =>
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(price);
 
-  if (name) {
-    document.getElementById("product-name").textContent = name;
+  const updateProductName = (name) => {
+    const nameEl = document.getElementById("product-name");
+    if (!nameEl) return;
 
-    // Ambil kata pertama untuk Series
+    nameEl.textContent = name;
+
     const firstWord = name.split(" ")[0];
-    const seriesEl = document.querySelector(".product-info-item:nth-child(4)"); // Series ada di posisi ke-4
+    const seriesEl = document.querySelector(".product-info-item:nth-child(4)");
     if (seriesEl) {
       seriesEl.innerHTML = `<strong>Series:</strong> ${firstWord}`;
     }
-  }
+  };
 
-  if (price) {
+  const updateProductPrice = (price) => {
     const rawPrice = parseInt(price.replace(/\D/g, ""));
     const formattedPrice = formatRupiah(rawPrice);
 
-    document.getElementById("product-price").textContent =
-      "Rp" + formattedPrice;
+    const priceEl = document.getElementById("product-price");
+    if (priceEl) {
+      priceEl.textContent = formattedPrice;
+    }
 
-    // Hitung DP = harga / 8
     const dp = Math.floor(rawPrice / 8);
     const dpEl = document.querySelector(".product-dp");
     if (dpEl) {
-      dpEl.textContent = "DP Rp" + formatRupiah(dp);
+      dpEl.textContent = "DP " + formatRupiah(dp);
     }
-  }
+  };
 
-  if (img) {
-    const imgPath = "../img/product/" + img;
-    document.getElementById("main-img").src = imgPath;
+  const updateProductImage = (img) => {
+    const imgPath = `../img/product/${img}`;
+    const mainImgEl = document.getElementById("main-img");
+    if (mainImgEl) {
+      mainImgEl.src = imgPath;
+    }
 
     const thumbs = document.querySelectorAll("#thumbnails img");
-    thumbs.forEach((th) => {
-      th.src = imgPath;
-    });
-  }
+    thumbs.forEach((th) => (th.src = imgPath));
+  };
+
+  const updateProductDesc = (desc) => {
+    const descEl = document.getElementById("desc");
+    if (descEl) {
+      descEl.textContent = desc;
+    }
+  };
+
+  if (productData.name) updateProductName(productData.name);
+  if (productData.price) updateProductPrice(productData.price);
+  if (productData.img) updateProductImage(productData.img);
+  if (productData.desc) updateProductDesc(productData.desc);
 });
+
