@@ -39,3 +39,27 @@ document.querySelectorAll(".btn.bg-warning").forEach((button) => {
     window.location.href = `./html/product.html?${query.toString()}`;
   });
 });
+
+document.querySelectorAll(".btn.btn-primary.btn-sm.w-100").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // Ambil elemen induk terdekat yang punya atribut data-*
+    const productEl = button.closest("[data-name][data-price][data-img]");
+
+    const name = productEl.dataset.name;
+    const price = productEl.dataset.price;
+    const img = productEl.dataset.img;
+
+    const product = { name, price, img };
+
+    // Ambil cart dari sessionStorage, atau buat array kosong
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+    cart.push(product);
+
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Produk ditambahkan ke keranjang!");
+  });
+});
