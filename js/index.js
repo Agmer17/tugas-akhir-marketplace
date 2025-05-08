@@ -115,7 +115,7 @@ function scrollCards(scrollOffset) {
   const container = document.querySelector(".horizontal-scroll-container");
   container.scrollBy({
     left: scrollOffset,
-    behavior: "smooth", // Animasi smooth scrolling
+    behavior: "smooth",
   });
 }
 
@@ -216,9 +216,22 @@ function renderNormalProducts(products, container) {
     viewBtn.textContent = "View Detail";
 
     const cartBtn = document.createElement("a");
-    cartBtn.href = "/html/cart.html";
     cartBtn.className = "btn btn-primary btn-sm w-100";
     cartBtn.textContent = "Add To Cart";
+    cartBtn.addEventListener("click", () => {
+      const data = {
+        name: product.name,
+        price: product.price,
+        img: product.img,
+      };
+      let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+      cart.push(product);
+
+      sessionStorage.setItem("cart", JSON.stringify(cart));
+
+      alert("Produk ditambahkan ke keranjang!");
+    });
 
     // Merakit elemen
     btnGroup.appendChild(viewBtn);

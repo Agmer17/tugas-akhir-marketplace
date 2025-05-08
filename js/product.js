@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
+  const addToCart = document.getElementById("addToCart");
 
   const productData = {
     name: params.get("name"),
@@ -26,6 +27,16 @@ window.addEventListener("DOMContentLoaded", () => {
     if (seriesEl) {
       seriesEl.innerHTML = `<strong>Series:</strong> ${firstWord}`;
     }
+  };
+
+  const addProductToCart = (data) => {
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+    cart.push({ name: data.name, price: data.price, img: data.img });
+
+    sessionStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Produk ditambahkan ke keranjang!");
   };
 
   const updateProductPrice = (price) => {
@@ -66,5 +77,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if (productData.price) updateProductPrice(productData.price);
   if (productData.img) updateProductImage(productData.img);
   if (productData.desc) updateProductDesc(productData.desc);
+  addToCart.addEventListener("click", () => {
+    addProductToCart(productData);
+  });
 });
-
