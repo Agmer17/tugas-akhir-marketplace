@@ -51,7 +51,8 @@ function createProductCards(dataProduct) {
     "col-sm-6",
     "col-md-4",
     "col-lg-3",
-    "mb-4"
+    "mb-4",
+    "card-container-all"
   );
 
   const card = document.createElement("div");

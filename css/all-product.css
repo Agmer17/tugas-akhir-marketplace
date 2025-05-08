@@ -58,6 +58,10 @@
     /* Ensure items in a row have similar height */
 }
 
+.card-container-all {
+    cursor: pointer;
+}
+
 .product-item img {
     max-width: 100%;
     height: auto;
