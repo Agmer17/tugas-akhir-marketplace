@@ -9,6 +9,8 @@ window.addEventListener("DOMContentLoaded", () => {
     desc: params.get("desc"),
   };
 
+  sessionStorage.setItem("dummyItemData", productData);
+
   const formatRupiah = (price) =>
     new Intl.NumberFormat("id-ID", {
       style: "currency",
@@ -73,11 +75,28 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  if (productData.name) updateProductName(productData.name);
-  if (productData.price) updateProductPrice(productData.price);
-  if (productData.img) updateProductImage(productData.img);
-  if (productData.desc) updateProductDesc(productData.desc);
-  addToCart.addEventListener("click", () => {
-    addProductToCart(productData);
-  });
+  function loadProduct() {
+    if (productData.name) updateProductName(productData.name);
+    if (productData.price) updateProductPrice(productData.price);
+    if (productData.img) updateProductImage(productData.img);
+    if (productData.desc) updateProductDesc(productData.desc);
+    addToCart.addEventListener("click", () => {
+      addProductToCart(productData);
+    });
+
+    history.pushState(
+      "",
+      productData.name,
+      `/product/${productData.name.replaceAll(" ", "-")}`
+    );
+  }
+
+  // Saat tombol back/forward diklik
+  window.onpopstate = function (event) {
+    if (event.state?.page === productData.name) {
+      history.replaceState({ page: "home" }, "", "/");
+    }
+  };
+
+  loadProduct();
 });

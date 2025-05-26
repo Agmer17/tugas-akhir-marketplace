@@ -258,6 +258,11 @@
     }
 }
 
+.hero-img-size {
+    height: 400px;
+    width: auto;
+}
+
 .product-card {
     cursor: pointer;
 }
