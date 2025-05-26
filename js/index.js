@@ -118,54 +118,6 @@ function scrollCards(scrollOffset) {
     behavior: "smooth",
   });
 }
-
-// document.querySelectorAll(".btn.bg-warning").forEach((button) => {
-//   button.addEventListener("click", function (e) {
-//     e.preventDefault(); // Jangan langsung redirect
-
-//     // Cari elemen parent .col (yang punya data-*)
-//     const parent = this.closest(".col");
-
-//     const name = parent.dataset.name;
-//     const price = parent.dataset.price;
-//     const img = parent.dataset.img;
-
-//     // Encode dan buat URL
-//     const query = new URLSearchParams({
-//       name: name,
-//       price: price,
-//       img: img,
-//     });
-
-//     // Redirect ke product.html dengan query string
-//     window.location.href = `./html/product.html?${query.toString()}`;
-//   });
-// });
-
-// document.querySelectorAll(".btn.btn-primary.btn-sm.w-100").forEach((button) => {
-//   button.addEventListener("click", (e) => {
-//     e.preventDefault();
-
-//     // Ambil elemen induk terdekat yang punya atribut data-*
-//     const productEl = button.closest("[data-name][data-price][data-img]");
-
-//     const name = productEl.dataset.name;
-//     const price = productEl.dataset.price;
-//     const img = productEl.dataset.img;
-
-//     const product = { name, price, img };
-
-//     // Ambil cart dari sessionStorage, atau buat array kosong
-//     let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-//     cart.push(product);
-
-//     sessionStorage.setItem("cart", JSON.stringify(cart));
-
-//     alert("Produk ditambahkan ke keranjang!");
-//   });
-// });
-
 function renderNormalProducts(products, container) {
   // Hanya ambil produk tertentu kalau diperlukan, misal tanpa filter: gunakan seluruh array
   const productList = [...products].reverse();

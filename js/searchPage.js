@@ -1,11 +1,18 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const productContainer = document.getElementById("allProductContainer");
   try {
+    const params = new URLSearchParams(window.location.search);
     const response = await fetch("/data.json");
     const dataFromJson = await response.json();
+    const query = params.get("query")?.toLowerCase();
 
-    renderProduct(dataFromJson, productContainer);
-    renderProductCategory(dataFromJson);
+    const filtered = dataFromJson.filter((item) =>
+      item.name.toLowerCase().startsWith(query)
+    );
+
+    console.log(filtered);
+
+    renderProduct(filtered, productContainer);
   } catch (error) {
     console.log(error);
   }
@@ -86,66 +93,4 @@ function createProductCards(dataProduct) {
   });
 
   return cardContainer;
-}
-
-function buatCheckboxCategory(cat, isAll = false) {
-  const div = document.createElement("div");
-  div.className = "form-check";
-
-  const input = document.createElement("input");
-  input.type = "checkbox";
-  input.className = "form-check-input";
-  input.id = `category${capitalize(cat)}`;
-  input.value = cat;
-  if (isAll) input.checked = true;
-
-  const label = document.createElement("label");
-  label.className = "form-check-label";
-  label.htmlFor = input.id;
-  label.textContent = capitalize(cat);
-
-  div.appendChild(input);
-  div.appendChild(label);
-
-  return div;
-}
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function renderProductCategory(data) {
-  const productContainer = document.getElementById("allProductContainer");
-
-  const categories = [
-    ...new Set(data.map((item) => item.name.split(" ")[0].toLowerCase())),
-  ];
-  const container = document.getElementById("categoryAll");
-
-  categories.forEach((itemName) => {
-    const checkbox = buatCheckboxCategory(itemName);
-    container.appendChild(checkbox);
-  });
-
-  container.querySelectorAll('input[type="checkbox"]').forEach((checkbox) => {
-    checkbox.addEventListener("change", (e) => {
-      if (checkbox.checked) {
-        // Uncheck semua checkbox lain kecuali ini
-        container.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
-          if (cb !== checkbox) cb.checked = false;
-        });
-
-        // Filter data sesuai kategori checkbox ini (case insensitive)
-        const category = checkbox.value.toLowerCase();
-        const filteredData = data.filter((item) =>
-          item.name.toLowerCase().startsWith(category)
-        );
-
-        renderProduct(filteredData, productContainer);
-      } else {
-        // Kalau checkbox di-uncheck, render semua produk (opsional)
-        renderProduct(data, productContainer);
-      }
-    });
-  });
 }
