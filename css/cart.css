@@ -1,0 +1,339 @@
+/* Styling untuk elemen <dialog> secara keseluruhan */
+dialog.checkout-dialog {
+    border: none;
+    border-radius: 12px;
+    /* Lebih modern dengan border-radius */
+    padding: 0;
+    /* Hapus padding default dialog */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    /* Bayangan yang lebih lembut */
+    max-width: 90%;
+    /* Responsif, batasi lebar maksimum */
+    width: 800px;
+    /* Lebar default untuk desktop */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Font yang modern */
+    background-color: #fff;
+    overflow: hidden;
+    /* Pastikan konten tidak meluber dari sudut */
+}
+
+/* Backdrop untuk dialog */
+dialog.checkout-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Lebih gelap sedikit dari default */
+    backdrop-filter: blur(3px);
+    /* Efek blur untuk latar belakang */
+}
+
+/* Header dialog */
+.dialog-header {
+    background-color: #FFC107;
+    /* Warna kuning dari gambar Anda */
+    color: #343A40;
+    padding: 18px 25px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 12px;
+    /* Radius untuk sudut atas */
+    border-top-right-radius: 12px;
+}
+
+.dialog-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.close-dialog-btn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #343A40;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.close-dialog-btn:hover {
+    color: #212529;
+}
+
+/* Body dialog */
+.dialog-body {
+    padding: 25px;
+    max-height: 70vh;
+    /* Batasi tinggi body agar scrollable jika kontennya banyak */
+    overflow-y: auto;
+    /* Aktifkan scroll jika konten melebihi max-height */
+}
+
+.dialog-row {
+    display: flex;
+    gap: 30px;
+    /* Jarak antar kolom */
+    flex-wrap: wrap;
+    /* Pastikan kolom wrap di layar kecil */
+}
+
+.dialog-column {
+    flex: 1;
+    /* Agar kolom mengisi ruang yang tersedia */
+    min-width: 300px;
+    /* Lebar minimum sebelum wrap */
+}
+
+.dialog-column h3 {
+    font-size: 1.4rem;
+    color: #343A40;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #495057;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    /* Penting untuk padding agar tidak menambah lebar */
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #FFC107;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+.form-group textarea {
+    resize: vertical;
+    /* Hanya izinkan resize vertikal */
+}
+
+.form-group-half {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 18px;
+}
+
+.form-group-half>.form-group {
+    flex: 1;
+    margin-bottom: 0;
+    /* Hapus margin bawah karena sudah diatur di parent */
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    /* Spasi sedikit dari elemen di atasnya */
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #FFC107;
+    /* Warna centang */
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    /* Hapus margin default label */
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+.checkbox-group label a {
+    color: #FFC107;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.checkbox-group label a:hover {
+    text-decoration: underline;
+}
+
+
+/* Order Summary Card */
+.order-summary-card {
+    background-color: #f8f9fa;
+    /* Latar belakang abu-abu muda */
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 25px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    color: #495057;
+}
+
+.summary-item:last-of-type {
+    margin-bottom: 0;
+}
+
+.order-summary-card hr {
+    border: none;
+    border-top: 1px dashed #dee2e6;
+    margin: 15px 0;
+}
+
+.summary-item.subtotal,
+.summary-item.shipping-cost {
+    font-weight: 500;
+}
+
+.summary-item.total {
+    font-weight: bold;
+    font-size: 1.15rem;
+    color: #212529;
+    margin-top: 15px;
+    /* Spasi lebih dari item di atasnya */
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 10px;
+}
+
+
+/* Footer dialog */
+.dialog-footer {
+    padding: 18px 25px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    /* Jarak antar tombol */
+    border-bottom-left-radius: 12px;
+    /* Radius untuk sudut bawah */
+    border-bottom-right-radius: 12px;
+}
+
+/* Button Styling */
+.dialog-footer button {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cancel-btn {
+    background-color: #6c757d;
+    color: #fff;
+    border: 1px solid #6c757d;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.confirm-btn {
+    background-color: #FFC107;
+    /* Warna kuning dari gambar Anda */
+    color: #343A40;
+    border: 1px solid #FFC107;
+    font-weight: 600;
+}
+
+.confirm-btn:hover {
+    background-color: #e0a800;
+    /* Sedikit lebih gelap saat hover */
+    border-color: #d39e00;
+}
+
+/* Responsiveness for smaller screens */
+@media (max-width: 768px) {
+    dialog.checkout-dialog {
+        max-width: 95%;
+        /* Lebih lebar di layar kecil */
+        width: auto;
+        /* Sesuaikan lebar secara otomatis */
+    }
+
+    .dialog-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .dialog-body {
+        padding: 18px;
+    }
+
+    .dialog-row {
+        flex-direction: column;
+        /* Kolom bertumpuk di layar kecil */
+        gap: 25px;
+    }
+
+    .dialog-column {
+        min-width: unset;
+        /* Hapus min-width agar menyesuaikan */
+        width: 100%;
+    }
+
+    .form-group-half {
+        flex-direction: column;
+        /* Field setengah lebar juga bertumpuk */
+        gap: 18px;
+    }
+
+    .dialog-footer {
+        flex-direction: column-reverse;
+        /* Tombol bertumpuk, konfirmasi di atas batal */
+        gap: 10px;
+        padding: 18px;
+    }
+
+    .dialog-footer button {
+        width: 100%;
+        /* Tombol memenuhi lebar */
+    }
+}
+
+@media (max-width: 480px) {
+    .dialog-header h2 {
+        font-size: 1.2rem;
+    }
+
+    .dialog-header {
+        padding: 15px 20px;
+    }
+
+    .dialog-body {
+        padding: 15px;
+    }
+
+    .dialog-footer {
+        padding: 15px;
+    }
+}

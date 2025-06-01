@@ -108,46 +108,96 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function renderSummaryItems() {
+    const data = JSON.parse(sessionStorage.getItem("cart"));
+    const summaryCard = document.querySelector(".order-summary-card");
+
+    data.forEach((item) => {
+      const qty = parseInt(item.qty || 1);
+      const price = parseFloat(item.price);
+      const totalPerItem = price * qty;
+      const itemsDiv = document.createElement("div");
+      itemsDiv.classList.add("summary-item");
+
+      const spanItemName = document.createElement("span");
+      spanItemName.textContent = `${item.name} x${qty}`;
+
+      const spanItemTotal = document.createElement("span");
+      spanItemTotal.textContent = totalPerItem.toString();
+
+      itemsDiv.appendChild(spanItemName);
+      itemsDiv.appendChild(spanItemTotal);
+
+      summaryCard.appendChild(itemsDiv);
+    });
+
+    // <div class="order-summary-card">
+    //                     <div class="summary-item">
+    //                         <span>Kaos Custom Hero Claude MLBB (1x)</span>
+    //                         <span>Rp 99.000</span>
+    //                     </div>
+  }
+
   renderCart();
 
-  // --- LOGIC UNTUK TOMBOL PAYMENT (WA) ---
   if (paymentBTN) {
+    const checkoutDialog = document.getElementById("checkoutDialog");
+    const closeDialogBtn = checkoutDialog.querySelector(".close-dialog-btn");
+    const cancelBtn = checkoutDialog.querySelector(".cancel-btn");
+    const confirmBtn = checkoutDialog.querySelector(".confirm-btn");
+
     paymentBTN.addEventListener("click", () => {
-      const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-      if (cart.length === 0) {
-        alert(
-          "Keranjang belanja Anda kosong. Tambahkan item sebelum melanjutkan pembayaran."
-        );
-        return;
-      }
-
-      let subtotal = 0;
-      let whatsappMessage = "Halo, saya ingin memesan:\n\n";
-
-      cart.forEach((item) => {
-        const price = parseFloat(item.price);
-        const qty = parseInt(item.qty || 1);
-        subtotal += price * qty;
-        whatsappMessage += `- ${item.name} (x${qty})\n`;
-      });
-
-      const total = subtotal + ongkir; // Hitung total
-
-      whatsappMessage += "\n---\n"; // Tambahkan pemisah
-      whatsappMessage += `Subtotal: Rp ${subtotal.toLocaleString()}\n`;
-      whatsappMessage += `Ongkir: Rp ${ongkir.toLocaleString()}\n`;
-      whatsappMessage += `Total Pembelian: Rp ${total.toLocaleString()}`;
-
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-
-      const targetPhoneNumber = "6285889662159";
-
-      const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
-
-      window.open(whatsappURL, "_blank");
+      checkoutDialog.showModal();
+      renderSummaryItems();
     });
-  } else {
-    console.error("Elemen dengan ID 'paymentBTN' tidak ditemukan.");
+
+    closeDialogBtn.addEventListener("click", function () {
+      checkoutDialog.close();
+    });
+
+    // Fungsi untuk menutup dialog saat tombol 'Batal' diklik
+    cancelBtn.addEventListener("click", function () {
+      checkoutDialog.close();
+    });
   }
+  // --- LOGIC UNTUK TOMBOL PAYMENT (WA) ---
+  // if (paymentBTN) {
+  //   paymentBTN.addEventListener("click", () => {
+  //     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+  //     if (cart.length === 0) {
+  //       alert(
+  //         "Keranjang belanja Anda kosong. Tambahkan item sebelum melanjutkan pembayaran."
+  //       );
+  //       return;
+  //     }
+
+  //     let subtotal = 0;
+  //     let whatsappMessage = "Halo, saya ingin memesan:\n\n";
+
+  //     cart.forEach((item) => {
+  //       const price = parseFloat(item.price);
+  //       const qty = parseInt(item.qty || 1);
+  //       subtotal += price * qty;
+  //       whatsappMessage += `- ${item.name} (x${qty})\n`;
+  //     });
+
+  //     const total = subtotal + ongkir; // Hitung total
+
+  //     whatsappMessage += "\n---\n"; // Tambahkan pemisah
+  //     whatsappMessage += `Subtotal: Rp ${subtotal.toLocaleString()}\n`;
+  //     whatsappMessage += `Ongkir: Rp ${ongkir.toLocaleString()}\n`;
+  //     whatsappMessage += `Total Pembelian: Rp ${total.toLocaleString()}`;
+
+  //     const encodedMessage = encodeURIComponent(whatsappMessage);
+
+  //     const targetPhoneNumber = "6285889662159";
+
+  //     const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
+
+  //     window.open(whatsappURL, "_blank");
+  //   });
+  // } else {
+  //   console.error("Elemen dengan ID 'paymentBTN' tidak ditemukan.");
+  // }
 });

@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const productContainer = document.getElementById("allProductContainer");
+  const input = form.querySelector("input[type='search']");
+
   try {
     const params = new URLSearchParams(window.location.search);
+    input.value = params.get("query");
     const response = await fetch("/data.json");
     const dataFromJson = await response.json();
     const query = params.get("query")?.toLowerCase();
@@ -10,11 +13,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       item.name.toLowerCase().startsWith(query)
     );
 
-    console.log(filtered);
+    // Kosongin dulu kontainernya
+    productContainer.innerHTML = "";
 
-    renderProduct(filtered, productContainer);
+    if (filtered.length === 0) {
+      const h1 = document.createElement("h1");
+      h1.textContent = "BARANG GAK ADA TAU :(";
+      h1.classList.add("text-dark", "fw-bold", "text-center", "py-3");
+      productContainer.appendChild(h1);
+    } else {
+      renderProduct(filtered, productContainer);
+    }
   } catch (error) {
-    console.log(error);
+    console.error("Gagal memuat data:", error);
   }
 });
 
