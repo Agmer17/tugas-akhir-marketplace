@@ -6,67 +6,125 @@ document.addEventListener("DOMContentLoaded", () => {
   const ongkir = 10000;
   const paymentBTN = document.getElementById("paymentBTN");
 
+  const formatRupiah = (price) =>
+    new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0,
+    }).format(price);
+
   function renderCart() {
-    const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    container.innerHTML = ""; // bersihkan container
+    const rawCart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    container.innerHTML = "";
 
     let subtotal = 0;
 
-    if (cart.length === 0) {
-      container.innerHTML = "<p>Keranjang belanja Anda kosong.</p>"; // Tampilkan pesan jika kosong
-      // Opsional: Nonaktifkan tombol payment jika keranjang kosong
-      if (paymentBTN) {
-        paymentBTN.disabled = true;
+    const mergedCart = [];
+
+    rawCart.forEach((item) => {
+      const existing = mergedCart.find((i) => i.name === item.name);
+      if (existing) {
+        existing.qty += parseInt(item.qty || 1);
+      } else {
+        mergedCart.push({
+          ...item,
+          qty: parseInt(item.qty || 1),
+        });
       }
+    });
+
+    if (mergedCart.length === 0) {
+      container.textContent = "Keranjang belanja Anda kosong.";
+      if (paymentBTN) paymentBTN.disabled = true;
     } else {
-      if (paymentBTN) {
-        paymentBTN.disabled = false; // Aktifkan tombol jika ada item
-      }
-      cart.forEach((item, index) => {
+      if (paymentBTN) paymentBTN.disabled = false;
+
+      mergedCart.forEach((item, index) => {
         const price = parseFloat(item.price);
-        const qty = parseInt(item.qty || 1);
-        const totalPerItem = price * qty;
+        const totalPerItem = price * item.qty;
         subtotal += totalPerItem;
 
-        const productHTML = document.createElement("div");
-        productHTML.className = "row product-item align-items-center";
-        productHTML.innerHTML = `
-              <div class="col-md-2 col-sm-3 col-4">
-                <img src="./../img/product/${
-                  item.img
-                }" class="img-fluid rounded" alt="${item.name}" />
-              </div>
-              <div class="col-md-4 col-sm-5 col-8">
-                <h6 class="mb-0">Produk</h6>
-                <p class="mb-1">${item.name}</p>
-                <small class="text-muted">Custom Futsal Jersey</small>
-              </div>
-              <div class="col-md-2 col-sm-4 col-6 text-md-start text-sm-end mt-2 mt-sm-0">
-                <p class="mb-0">Rp ${price.toLocaleString()}</p>
-              </div>
-              <div class="col-md-2 col-sm-4 col-6 mt-2 mt-sm-0">
-                <div class="quantity-control d-flex gap-1">
-                  <button class="btn btn-outline-secondary btn-sm btn-minus" data-index="${index}">-</button>
-                  <input type="text" class="form-control form-control-sm text-center" value="${qty}" disabled />
-                  <button class="btn btn-outline-secondary btn-sm btn-plus" data-index="${index}">+</button>
-                </div>
-              </div>
-              <div class="col-md-2 col-sm-4 col-12 text-md-end text-sm-end text-start mt-2 mt-sm-0">
-                <p class="mb-0 fw-bold">Rp ${totalPerItem.toLocaleString()}</p>
-              </div>
-            `;
-        container.appendChild(productHTML);
+        const productDiv = document.createElement("div");
+        productDiv.className = "row product-item align-items-center mb-2";
+
+        // Kolom gambar
+        const imgCol = document.createElement("div");
+        imgCol.className = "col-md-2 col-sm-3 col-4";
+        const img = document.createElement("img");
+        img.src = `./../img/product/${item.img}`;
+        img.alt = item.name;
+        img.className = "img-fluid rounded";
+        imgCol.appendChild(img);
+
+        const infoCol = document.createElement("div");
+        infoCol.className = "col-md-4 col-sm-5 col-8";
+        const title = document.createElement("h6");
+        title.className = "mb-0";
+        title.textContent = "Produk";
+        const name = document.createElement("p");
+        name.className = "mb-1";
+        name.textContent = item.name;
+        const desc = document.createElement("small");
+        desc.className = "text-muted";
+        desc.textContent = "Custom Futsal Jersey";
+        infoCol.append(title, name, desc);
+
+        // Kolom harga satuan
+        const priceCol = document.createElement("div");
+        priceCol.className =
+          "col-md-2 col-sm-4 col-6 text-md-start text-sm-end mt-2 mt-sm-0";
+        const priceP = document.createElement("p");
+        priceP.className = "mb-0";
+        priceP.textContent = `${formatRupiah(price)}`;
+        priceCol.appendChild(priceP);
+
+        // Kolom kuantitas
+        const qtyCol = document.createElement("div");
+        qtyCol.className = "col-md-2 col-sm-4 col-6 mt-2 mt-sm-0";
+        const qtyControl = document.createElement("div");
+        qtyControl.className = "quantity-control d-flex gap-1";
+
+        const btnMinus = document.createElement("button");
+        btnMinus.className = "btn btn-outline-secondary btn-sm btn-minus";
+        btnMinus.dataset.index = index;
+        btnMinus.textContent = "-";
+
+        const qtyInput = document.createElement("input");
+        qtyInput.type = "text";
+        qtyInput.className = "form-control form-control-sm text-center";
+        qtyInput.value = item.qty;
+        qtyInput.disabled = true;
+
+        const btnPlus = document.createElement("button");
+        btnPlus.className = "btn btn-outline-secondary btn-sm btn-plus";
+        btnPlus.dataset.index = index;
+        btnPlus.textContent = "+";
+
+        qtyControl.append(btnMinus, qtyInput, btnPlus);
+        qtyCol.appendChild(qtyControl);
+
+        // Kolom total per item
+        const totalCol = document.createElement("div");
+        totalCol.className =
+          "col-md-2 col-sm-4 col-12 text-md-end text-sm-end text-start mt-2 mt-sm-0";
+        const totalP = document.createElement("p");
+        totalP.className = "mb-0 fw-bold";
+        totalP.textContent = `Rp ${totalPerItem.toLocaleString()}`;
+        totalCol.appendChild(totalP);
+
+        // Gabungkan semuanya
+        productDiv.append(imgCol, infoCol, priceCol, qtyCol, totalCol);
+        container.appendChild(productDiv);
       });
     }
 
-    // Update nilai subtotal, ongkir, dan total
+    // Update subtotal, ongkir, total
     cartSubtotalElem.textContent = `Rp ${subtotal.toLocaleString()}`;
     cartOngkirElem.textContent = `Rp ${ongkir.toLocaleString()}`;
     cartTotalElem.textContent = `Rp ${(subtotal + ongkir).toLocaleString()}`;
 
-    // Pasang event listener hanya jika ada item di keranjang
-    if (cart.length > 0) {
-      attachEventListeners(); // pasang event listener ulang setiap render
+    if (mergedCart.length > 0) {
+      attachEventListeners();
     }
   }
 
@@ -109,21 +167,38 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderSummaryItems() {
-    const data = JSON.parse(sessionStorage.getItem("cart"));
-    const summaryCard = document.querySelector(".order-summary-card");
+    let subtotal = 0;
+    const rawCart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    const mergedCart = [];
 
-    data.forEach((item) => {
+    rawCart.forEach((item) => {
+      const existing = mergedCart.find((i) => i.name === item.name);
+      if (existing) {
+        existing.qty += parseInt(item.qty || 1);
+      } else {
+        mergedCart.push({
+          ...item,
+          qty: parseInt(item.qty || 1),
+        });
+      }
+    });
+
+    const summaryCard = document.querySelector(".order-summary-card");
+    summaryCard.innerHTML = "";
+
+    mergedCart.forEach((item) => {
       const qty = parseInt(item.qty || 1);
       const price = parseFloat(item.price);
       const totalPerItem = price * qty;
+      subtotal += totalPerItem;
       const itemsDiv = document.createElement("div");
       itemsDiv.classList.add("summary-item");
 
       const spanItemName = document.createElement("span");
-      spanItemName.textContent = `${item.name} x${qty}`;
+      spanItemName.textContent = `${item.name} (x${qty})`;
 
       const spanItemTotal = document.createElement("span");
-      spanItemTotal.textContent = totalPerItem.toString();
+      spanItemTotal.textContent = formatRupiah(totalPerItem);
 
       itemsDiv.appendChild(spanItemName);
       itemsDiv.appendChild(spanItemTotal);
@@ -131,11 +206,43 @@ document.addEventListener("DOMContentLoaded", () => {
       summaryCard.appendChild(itemsDiv);
     });
 
-    // <div class="order-summary-card">
-    //                     <div class="summary-item">
-    //                         <span>Kaos Custom Hero Claude MLBB (1x)</span>
-    //                         <span>Rp 99.000</span>
-    //                     </div>
+    summaryCard.appendChild(document.createElement("hr"));
+
+    let subtotalDivs = document.createElement("div");
+    subtotalDivs.classList.add("summary-item", "subtotal");
+    let subtotalTitle = document.createElement("span");
+    subtotalTitle.textContent = "Cart Subtotal";
+    let totalItemPrice = document.createElement("span");
+    totalItemPrice.textContent = formatRupiah(subtotal);
+
+    subtotalDivs.appendChild(subtotalTitle);
+    subtotalDivs.appendChild(totalItemPrice);
+    summaryCard.append(subtotalDivs);
+
+    const shippingCostDiv = document.createElement("div");
+    shippingCostDiv.className = "summary-item shipping-cost";
+
+    const labelSpan = document.createElement("span");
+    labelSpan.textContent = "Ongkir";
+
+    const valueSpan = document.createElement("span");
+    valueSpan.textContent = "Rp 10.000";
+
+    shippingCostDiv.append(labelSpan, valueSpan);
+
+    summaryCard.append(shippingCostDiv);
+
+    const totalDiv = document.createElement("div");
+    totalDiv.className = "summary-item total";
+
+    const totalTitle = document.createElement("span");
+    totalTitle.textContent = "Cart Total";
+
+    const totalItemShipVal = document.createElement("span");
+    totalItemShipVal.textContent = `${formatRupiah(subtotal + 10000)}`; // atau nilai total langsung
+
+    totalDiv.append(totalTitle, totalItemShipVal);
+    summaryCard.append(totalDiv);
   }
 
   renderCart();
@@ -160,44 +267,4 @@ document.addEventListener("DOMContentLoaded", () => {
       checkoutDialog.close();
     });
   }
-  // --- LOGIC UNTUK TOMBOL PAYMENT (WA) ---
-  // if (paymentBTN) {
-  //   paymentBTN.addEventListener("click", () => {
-  //     const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-  //     if (cart.length === 0) {
-  //       alert(
-  //         "Keranjang belanja Anda kosong. Tambahkan item sebelum melanjutkan pembayaran."
-  //       );
-  //       return;
-  //     }
-
-  //     let subtotal = 0;
-  //     let whatsappMessage = "Halo, saya ingin memesan:\n\n";
-
-  //     cart.forEach((item) => {
-  //       const price = parseFloat(item.price);
-  //       const qty = parseInt(item.qty || 1);
-  //       subtotal += price * qty;
-  //       whatsappMessage += `- ${item.name} (x${qty})\n`;
-  //     });
-
-  //     const total = subtotal + ongkir; // Hitung total
-
-  //     whatsappMessage += "\n---\n"; // Tambahkan pemisah
-  //     whatsappMessage += `Subtotal: Rp ${subtotal.toLocaleString()}\n`;
-  //     whatsappMessage += `Ongkir: Rp ${ongkir.toLocaleString()}\n`;
-  //     whatsappMessage += `Total Pembelian: Rp ${total.toLocaleString()}`;
-
-  //     const encodedMessage = encodeURIComponent(whatsappMessage);
-
-  //     const targetPhoneNumber = "6285889662159";
-
-  //     const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
-
-  //     window.open(whatsappURL, "_blank");
-  //   });
-  // } else {
-  //   console.error("Elemen dengan ID 'paymentBTN' tidak ditemukan.");
-  // }
 });
